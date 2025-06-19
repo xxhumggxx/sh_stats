@@ -1,8 +1,13 @@
 services:
   - type: web
-    name: sh_stats
+    name: sh-stats
     env: docker
+    dockerfilePath: ./Dockerfile
+    repo: https://github.com/your-repo/sh-stats
+    branch: main
     plan: free
-    region: singapore
-    dockerfilePath: Dockerfile
-    autoDeploy: true
+    buildCommand: "docker build -t sh-stats ."
+    startCommand: "docker run -p 80:80 sh-stats"
+    envVars:
+      - key: PHP_VERSION
+        value: "7.4"
