@@ -1,8 +1,13 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Origin: https://vanhungbui.store");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Accept");
 header("Content-Type: application/json");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
 
 $dataFile = "data.json";
 
@@ -22,6 +27,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         http_response_code(400);
         echo json_encode(["status" => "error", "message" => "Invalid data"]);
+    }
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (file_exists($dataFile)) {
+        $data = file_get_contents($dataFile);
+        echo $data;
+    } else {
+        http_response_code(404);
+        echo json_encode(["status" => "error", "message" => "Data file not found"]);
     }
     exit;
 }
