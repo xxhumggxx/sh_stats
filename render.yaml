@@ -3,7 +3,7 @@ services:
     name: sh-stats
     env: docker
     dockerfilePath: ./Dockerfile
-    repo: https://github.com/your-repo/sh-stats
+    repo: https://github.com/xxhumggxx/sh_stats
     branch: main
     plan: free
     buildCommand: "docker build -t sh-stats ."
