@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: php-api
+    name: sh_stats
     env: docker
     plan: free
     region: singapore
