@@ -21,7 +21,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($newData && isset($newData['executor'], $newData['player'], $newData['usageTime'], $newData['timestamp'])) {
         $data = json_decode(file_get_contents($dataFile), true);
-        $data[] = $newData;
+        
+        $found = false;
+        foreach ($data as &$entry) {
+            if ($entry['player'] === $newData['player']) {
+                $entry = $newData;
+                $found = true;
+                break;
+            }
+        }
+        
+        if (!$found) {
+            $data[] = $newData;
+        }
+        
         file_put_contents($dataFile, json_encode($data, JSON_PRETTY_PRINT));
         echo json_encode(["status" => "success", "message" => "Data saved successfully"]);
     } else {
